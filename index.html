@@ -2,12 +2,11 @@
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>Anushka Devaprakash</title>
 <link rel="icon" type="image/jpeg" href="/favicon.jpg">
 <link rel="apple-touch-icon" href="/favicon.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQTY2F9P1H"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -176,7 +175,9 @@ nav {
 }
 .ticker-inner { display: flex; white-space: nowrap; }
 .ticker-inner.running { animation: ticker-run 22s linear infinite; }
-.ticker-wrap:hover .ticker-inner { animation-play-state: paused; }
+/* Added :active state so the ticker pauses on mobile when a user taps/holds it */
+.ticker-wrap:hover .ticker-inner, 
+.ticker-wrap:active .ticker-inner { animation-play-state: paused; }
 .ti { font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.45); padding: 0 2rem; flex-shrink: 0; }
 .ti .sep { color: var(--dim); margin: 0 0.8rem; }
 @keyframes ticker-run { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -348,11 +349,9 @@ footer {
 
 /* ── CTF MOBILE ── */
 @media (max-width: 768px) {
-  /* make anomaly easier to tap */
   .ti-anomaly { padding: 0 1.4rem; font-size: 0.44rem; }
   .ticker-wrap { padding: 0.8rem 0; }
 
-  /* modal fills screen on mobile */
   #ctf-overlay { align-items: flex-end; }
   #ctf-terminal {
     width: 100%;
@@ -365,17 +364,14 @@ footer {
   .ctf-titlebar { padding: 0.6rem 1rem; }
   .ctf-titlebar-label { font-size: 0.38rem; letter-spacing: 0.14em; }
 
-  /* seals scroll horizontally */
   .ctf-seals { overflow-x: auto; flex-wrap: nowrap; padding: 0.5rem 1rem; gap: 4px; scrollbar-width: none; }
   .ctf-seals::-webkit-scrollbar { display: none; }
   .ctf-seal { font-size: 0.32rem; padding: 0.28rem 0.5rem; white-space: nowrap; flex-shrink: 0; }
 
-  /* body scrolls, input stays pinned */
   .ctf-body { flex: 1; overflow-y: auto; padding: 1rem 1rem 0.8rem; min-height: 140px; max-height: none; }
   .ctf-line { font-size: 0.46rem; line-height: 1.9; }
   .ctf-line.code { font-size: 0.5rem; }
 
-  /* input zones */
   .ctf-zone { padding: 0.8rem 1rem; }
   .ctf-zone-label { font-size: 0.36rem; }
   .ctf-zone-row { gap: 0.4rem; }
@@ -516,6 +512,8 @@ footer {
   padding: 1.4rem 1.8rem 1rem;
   min-height: 240px; max-height: 52vh; overflow-y: auto;
   scrollbar-width: thin; scrollbar-color: rgba(255,196,232,0.2) transparent;
+  /* Added to improve mobile scrolling physics */
+  -webkit-overflow-scrolling: touch; 
 }
 .ctf-line {
   font-size: 0.5rem; line-height: 2.1; color: rgba(255,255,255,0.45);
@@ -557,7 +555,6 @@ footer {
 </head>
 <body>
 
-<!-- 01 // you shouldn't be here. but since you are... check the console. -->
 <div class="grid-bg"></div>
 
 <nav>
@@ -566,13 +563,11 @@ footer {
     <li><a href="#focus">Focus</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <!-- Mobile hamburger -->
   <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- Mobile nav drawer -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#focus" class="mobile-link">Focus</a>
   <a href="#contact" class="mobile-link">Contact</a>
@@ -621,7 +616,6 @@ footer {
   </div>
 </div>
 
-<!-- CTF MODAL -->
 <div id="ctf-overlay" role="dialog" aria-modal="true" aria-label="Candy Grid Terminal">
   <div id="ctf-terminal">
     <div class="ctf-titlebar">
@@ -635,7 +629,6 @@ footer {
       <div class="ctf-seal" id="seal3">🍰 THE TABLE IS SET</div>
     </div>
     <div class="ctf-body" id="ctfBody"></div>
-    <!-- ZONE A: scavenger paste input -->
     <div class="ctf-zone" id="zoneA">
       <div class="ctf-zone-label">🍵 pour the decoded message into the teacup</div>
       <div class="ctf-zone-row">
@@ -644,7 +637,6 @@ footer {
       </div>
       <div class="ctf-error" id="errA">🍵 the teapot is displeased. that's not quite right.</div>
     </div>
-    <!-- ZONE B: ROT13 decode input -->
     <div class="ctf-zone" id="zoneB">
       <div class="ctf-zone-label">🪞 what do you see through the looking glass?</div>
       <div class="ctf-zone-row">
@@ -653,7 +645,6 @@ footer {
       </div>
       <div class="ctf-error" id="errB">🪞 the looking glass shows something different. try again.</div>
     </div>
-    <!-- ZONE C: final flag input -->
     <div class="ctf-zone" id="zoneC">
       <div class="ctf-zone-label">🍰 set the table — enter the final password to be seated</div>
       <div class="ctf-zone-row">
@@ -668,7 +659,6 @@ footer {
 <section id="focus">
   <div class="sh"><span class="sh-num">01</span><span class="sh-title">Focus</span><div class="sh-line"></div></div>
 
-  <!-- TIER 1: DOMAINS -->
   <div class="tier-label reveal">
     <span class="tier-num">I</span>
     <span class="tier-title">Domains</span>
@@ -776,7 +766,6 @@ footer {
 
   </div>
 
-  <!-- TIER 2: OPERATIONS -->
   <div class="tier-label reveal" style="margin-top:1px">
     <span class="tier-num">II</span>
     <span class="tier-title">Operations</span>
@@ -828,7 +817,6 @@ footer {
 
   </div>
 
-  <!-- TIER 3: RESEARCH -->
   <div class="tier-label reveal" style="margin-top:1px">
     <span class="tier-num">III</span>
     <span class="tier-title">Research</span>
@@ -944,13 +932,12 @@ footer {
   (function() {
     const inner = document.getElementById('tickerInner');
     // Clone each child into the same div so it's one continuous strip.
-    // The clone of ctfTrigger gets no id and no pointer events.
+    // The clone of ctfTrigger gets no id but retains pointer events so it works on mobile.
     const originals = Array.from(inner.children);
     originals.forEach(child => {
       const clone = child.cloneNode(true);
-      clone.removeAttribute('id');
+      if (clone.id) clone.removeAttribute('id');
       clone.setAttribute('aria-hidden', 'true');
-      clone.style.pointerEvents = 'none';
       inner.appendChild(clone);
     });
     // Now the div is exactly 2x wide — translateX(-50%) loops perfectly
@@ -961,7 +948,6 @@ footer {
   (function() {
     const overlay = document.getElementById('ctf-overlay');
     const body    = document.getElementById('ctfBody');
-    const trigger = document.getElementById('ctfTrigger');
     const closeBtn= document.getElementById('ctfClose');
     const seals   = [0,1,2,3].map(i => document.getElementById('seal'+i));
 
@@ -1112,7 +1098,13 @@ footer {
     function openModal()  { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; runIntro(); }
     function closeModal() { overlay.classList.remove('open'); document.body.style.overflow = ''; clearTimers(); showZone(null); }
 
-    trigger.addEventListener('click', openModal);
+    // Event delegation enables clicks on both the original trigger and its continuous clone
+    document.addEventListener('click', e => {
+      if (e.target && e.target.classList && e.target.classList.contains('ti-anomaly')) {
+        openModal();
+      }
+    });
+
     closeBtn.addEventListener('click', closeModal);
     overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
